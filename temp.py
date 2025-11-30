@@ -24,6 +24,8 @@ def tri_rapide(tab):
             else:
                 gauche.append(i)
         return tri_rapide(gauche) + [tab[taille-1]] + tri_rapide(droite)
+        #print(droite)
+        #print(gauche)
             
 tab = [9, -3, 5, 2, 6, 8, -6, 1, 3]
 
@@ -32,7 +34,7 @@ print(tri_rapide(tab))
     
     
 # tab = [1, 7, 4, 1, 10, 9, -2]
-# tri_rapide(tab, 0, len(tab) - 1)
+# tri_rapide(tab1)
 # print(tab)
 
 
@@ -47,28 +49,37 @@ def tri_par_insertion(tab):
     taille = len(tab)
     for i in range(1,taille):
         j = i
+        #print(tab)
         while(tab[j-1] > tab[j] and j > 0):
             tmp = 0
             tmp = tab[j]
             tab[j] = tab[j-1]
             tab[j-1] = tmp
             j -= 1
+            #print(tab)
     return tab
 
 
 def tri_rapide(tab):
     taille = len(tab)
+    if taille <= SEUIL:
+        return tri_par_insertion(tab)
+        #print(tab)
     droite = []
     gauche = []
+    
     for i in tab[0:(taille-1)]:
-        if i >= tab[taille-1]:
-            droite.append(i)
-        else:
+        if i < tab[taille-1]:
             gauche.append(i)
-    if taille >= SEUIL:
-        return tri_rapide(gauche) + [tab[taille-1]] + tri_par_insertion(droite)
-    else:
-        return tri_par_insertion(gauche) + [tab[taille-1]] + tri_par_insertion(droite)
+            #print(gauche)
+        else:
+            droite.append(i)
+            #print(droite)
+
+            
+            
+    return tri_rapide(gauche) + [tab[taille-1]] + tri_rapide(droite)
+    
 
         
 tab = [24, 97, 40, 67, 88, 85, 15, 66, 53, 44, 26, 48, 16, 52, 45, 23, 90, 18, 49, 80]
@@ -118,11 +129,41 @@ def  tri_par_enombrement(tab):
                         
             
 # tab = [1, 7, 4, 1, 10, 9, -2, 5, 3, 8, 0]
-# count_sort(tab)  
+# tri_par_enombrement(tab)  
 
 #...................................................................................#
 
       
+import matplotlib.pyplot as plt
+
+# Your recorded timings
+labels = ["QuickSort", "Hybrid QuickSort", "Counting Sort"]
+
+# Test Set 1 (random large values)
+test1 = [0.2415, 0.2297, 0]  # counting sort not used → set to 0
+
+# Test Set 2 (counting sort compatible)
+test2 = [0.2278, 0.2285, 0.0327]
+
+x = range(len(labels))
+
+plt.figure(figsize=(10, 6))
+
+# Bars for Test 1
+plt.bar([i - 0.15 for i in x], test1, width=0.3,
+        label="Test Set 1 (random large values)")
+
+# Bars for Test 2
+plt.bar([i + 0.15 for i in x], test2, width=0.3,
+        label="Test Set 2 (counting-sort-compatible)")
+
+plt.xticks(x, labels)
+plt.ylabel("Time (seconds)")
+plt.title("Comparison of Sorting Algorithms")
+plt.legend()
+plt.tight_layout()
+plt.show()
+
 
        
     
