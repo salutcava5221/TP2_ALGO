@@ -88,7 +88,7 @@ print(tri_rapide(tab))
 #...................................................................................#
 
 
-def count_sort(tab):
+def  tri_par_enombrement(tab):
     Min = min(tab)
     Max = max(tab)
     tmp =[]
